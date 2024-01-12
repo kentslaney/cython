@@ -89,8 +89,12 @@ def make_command_file(path_to_debug_info, prefix_code='',
                 f.write(textwrap.dedent('''\
                     python
                     import sys
+<<<<<<< HEAD
                     # Check if the Python executable provides a symbol table.
                     if not hasattr(gdb.selected_inferior().progspace, "symbol_file"):
+=======
+                    if hasattr(gdb.selected_inferior().progspace, "symbol_file"):
+>>>>>>> 8adf72b8b (wrong failure case for lack of debugging symbols)
                         sys.stderr.write(
                             "''' + interpreter + ''' was not compiled with debug symbols (or it was "
                             "stripped). Some functionality may not work (properly).\\n")

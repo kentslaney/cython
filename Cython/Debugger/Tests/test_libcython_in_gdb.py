@@ -531,8 +531,12 @@ def _debug(*messages):
 
 
 def run_unittest_in_module(modulename):
+<<<<<<< HEAD
     # Check if the Python executable provides a symbol table.
     if not hasattr(gdb.selected_inferior().progspace, "symbol_file"):
+=======
+    if hasattr(gdb.selected_inferior().progspace, "symbol_file"):
+>>>>>>> 8adf72b8b (wrong failure case for lack of debugging symbols)
         msg = ("Unable to run tests, Python was not compiled with "
                 "debugging information. Either compile python with "
                 "-g or get a debug build (configure with --with-pydebug).")
