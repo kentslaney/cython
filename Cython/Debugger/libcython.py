@@ -227,6 +227,7 @@ class CythonFunction(CythonVariable):
 
 # General purpose classes
 
+<<<<<<< HEAD
 def frame_repr(frame):
     """Returns a string representing the internal state of a provided GDB frame
 
@@ -265,6 +266,26 @@ def frame_repr(frame):
         else:
             res += str(value) + "\n"
     return res
+=======
+def frame_str(f):
+    res = str(f) + "\n"
+    for i in filter(lambda x: not x.startswith("__"), dir(f)):
+        val = getattr(f, i)
+        if callable(val):
+            try:
+                val = val()
+            except Exception as e:
+                pass
+
+        if type(val) in [gdb.Symtab_and_line, gdb.Symbol, gdb.Symtab]:
+            val = frame_str(val).rsplit("\n", 1)[0].replace("\n", "\n\t")
+        res += i + ": "
+        if type(val) == int:
+            res += hex(val) + "\n"
+        else:
+            res += str(val) + "\n"
+    return res + "-" * 50
+>>>>>>> dfcaa404c (lineno fix and gdb object representations)
 
 class CythonBase:
 
