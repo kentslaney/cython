@@ -37,3 +37,4 @@ RUN sudo make install -i
 ENV LD_LIBRARY_PATH=/usr/local/lib
 RUN while gdb -h 2>&1 | grep libicu &>/dev/null; do gdb -h 2>&1 | sed 's!.*\(\(libicu\w\+.so\).\w\+\).*!/usr/local/lib/\2 /usr/local/lib/\1!' | xargs sudo ln -s; done
 WORKDIR /home/docker/cython
+RUN echo "source /home/docker/cython/venv/bin/activate" >> /home/docker/.bashrc
