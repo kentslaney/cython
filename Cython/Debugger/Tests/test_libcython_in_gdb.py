@@ -244,6 +244,13 @@ class TestStep(DebugStepperTestCase):
         self.assertEqual(frame_name, 'join')
         assert re.match(r'\d+    def join\(', result), result
 
+    def test_cython_into_c_step(self):
+        self.break_and_run('int(10)')
+        gdb.execute("cy step")
+        gdb.execute("cy step")
+        print(gdb.selected_frame().static_link())
+        breakpoint()
+
 
 class TestNext(DebugStepperTestCase):
 

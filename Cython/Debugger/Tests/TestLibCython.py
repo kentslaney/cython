@@ -223,8 +223,8 @@ class GdbDebuggerTestCase(DebuggerTestCase):
 
         self.p = subprocess.Popen(
             args,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            # stdout=subprocess.PIPE,
+            # stderr=subprocess.PIPE,
             env=env)
 
     def tearDown(self):
