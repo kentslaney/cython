@@ -24,11 +24,6 @@ RUN git apply maxlen.patch
 RUN ./configure --with-system-readline -with-python="`which python-dbg`"
 RUN make
 RUN sudo make install
-RUN git clone https://github.com/cython/cython.git /home/docker/cython
-WORKDIR /home/docker/cython
-RUN python-dbg -m pip install virtualenv
-RUN python-dbg -m virtualenv venv
-RUN venv/bin/pip install -e .
 RUN git clone https://github.com/unicode-org/icu /home/docker/icu
 WORKDIR /home/docker/icu/icu4c/source
 RUN ./configure
@@ -36,5 +31,11 @@ RUN make -i
 RUN sudo make install -i
 ENV LD_LIBRARY_PATH=/usr/local/lib
 RUN while gdb -h 2>&1 | grep libicu &>/dev/null; do gdb -h 2>&1 | sed 's!.*\(\(libicu\w\+.so\).\w\+\).*!/usr/local/lib/\2 /usr/local/lib/\1!' | xargs sudo ln -s; done
+RUN git clone https://github.com/kentslaney/cython.git /home/docker/cython
 WORKDIR /home/docker/cython
+RUN git checkout gdb-segfault
+RUN python-dbg -m pip install virtualenv
+RUN python-dbg -m virtualenv venv
+RUN venv/bin/pip install -e .
 RUN echo "source /home/docker/cython/venv/bin/activate" >> /home/docker/.bashrc
+CMD CFLAGS="-O0 -ggdb" python-dbg runtests.py -vv Debugger --backends=c,cpp
