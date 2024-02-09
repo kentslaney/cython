@@ -21,7 +21,7 @@ WORKDIR /home/docker/gdb
 RUN curl -o maxlen.patch https://raw.githubusercontent.com/ali1234/rpi-toolchain/2ea7ffdae865ce54f53ed69ccf5e7d31d90dfb72/patches/gdb/8.2.1/0001-DouglasRoyds-workaround-for-deeply-nested-confdir3.patch
 RUN sed -i 's!gdb/gnu!gnu!g' maxlen.patch
 RUN git apply maxlen.patch
-RUN ./configure --with-system-readline -with-python="`which python-dbg`"
+RUN ./configure --with-system-readline --with-python="`which python-dbg`"
 RUN make
 RUN sudo make install
 RUN git clone https://github.com/unicode-org/icu /home/docker/icu
